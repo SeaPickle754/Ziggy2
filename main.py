@@ -22,6 +22,7 @@ tilePaths={
 	"stairs":"tiles\\stairs.png",
 	"start":"misc\\start.png",
 	"mud":"tiles\\dirt.png",
+	"sign":"tiles\\sign.png",
 }
 
 MUD_SLOW = 100
@@ -37,7 +38,7 @@ class Game(pyglet.window.Window):
 			[0,0,0,1,11,1,0,0,0,0],
 			[0,0,0,1,11,1,0,0,0,0],
 			[0,0,0,0,1,0,0,0,0,0],
-			[0,0,0,1,0,0,11,11,0,0],
+			[0,0,0,1,12,0,11,11,0,0],
 			[0,0,0,9,0,0,11,11,0,0],
 			[0,0,0,0,0,0,0,0,0,1]
 		]
@@ -45,6 +46,7 @@ class Game(pyglet.window.Window):
 		self.group = pyglet.graphics.OrderedGroup(0)
 		self.start = pyglet.image.load(tilePaths["start"])
 		self.tiles, self.enemies = [],[]
+		self.nextRoom = 2
 		self.dialogOpen = False
 		self.muted = False
 		pygame.mixer.init()
@@ -69,7 +71,6 @@ class Game(pyglet.window.Window):
 			else:
 				self.enemies.append(enemy.Zombie(self.player, self.entityBatch))
 				self.enemies[-1].group = self.group
-		self.nextRoom = 2
 		self.game_active = False
 	
 	def toggle_game_active(self):
@@ -116,8 +117,13 @@ class Game(pyglet.window.Window):
 				elif tileArray[y][x] == 11:
 					tiles[y].append(objects.slowDownTile(tilePaths["mud"], x, y, self.batch))
 					tiles[y][-1].group = self.group
+				
+				elif tileArray[y][x] == 12:
+					tiles[y].append(objects.Sign(tilePaths["sign"], x, y, self.batch, self.nextRoom))
+					tiles[y][-1].group = self.group
 				else:
 					continue
+		del tileArray
 		return tiles
 				
 	def draw_text(self):

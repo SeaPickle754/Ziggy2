@@ -59,7 +59,7 @@ class Store(pyglet.sprite.Sprite):
 	def __init__(self, texture, x, y, batch):
 		super().__init__(pyglet.image.load(texture), x = x*40, y = y*40, batch=batch)
 		self.type = 3
-		self.storeType = random.randint(1,2)
+		self.storeType = random.randint(0,1)
 	
 	def get_dialog(self):
 		return dialogLoader.load_dialog(self.storeType)
@@ -72,3 +72,19 @@ class Store(pyglet.sprite.Sprite):
 			player.health = 5
 		if self.storeType == 2:
 			return
+
+
+class Sign(pyglet.sprite.Sprite):
+	#=========================
+	#gets dialog when e pressed.
+	#=========================
+	def __init__(self, texture, x, y, batch, room):
+		super().__init__(pyglet.image.load(texture), x = x*40, y = y*40, batch=batch)
+		self.type = 3
+		self.room = room
+	
+	def get_dialog(self):
+		return dialogLoader.load_dialog(self.room)
+	
+	def doTransaction(self, player):
+		return
