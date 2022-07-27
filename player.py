@@ -1,18 +1,18 @@
 import pyglet
 
 images = {
-	"right":"player\\right.png",
-	"left":"player\\left.png",
-	"up":"player\\up.png",
-	"down":"player\\down.png",
-	"aright":"player\\right_attack.png",
-	"aleft":"player\\left_attack.png",
-	"aup":"player\\up_attack.png",
-	"adown":"player\\down_attack.png",
-	"dright":"player\\right_damage.png",
-	"dleft":"player\\left_damage.png",
-	"dup":"player\\up_damage.png",
-	"ddown":"player\\down_damage.png",
+	"right":"player/right.png",
+	"left":"player/left.png",
+	"up":"player/up.png",
+	"down":"player/down.png",
+	"aright":"player/right_attack.png",
+	"aleft":"player/left_attack.png",
+	"aup":"player/up_attack.png",
+	"adown":"player/down_attack.png",
+	"dright":"player/right_damage.png",
+	"dleft":"player/left_damage.png",
+	"dup":"player/up_damage.png",
+	"ddown":"player/down_damage.png",
 
 }
 

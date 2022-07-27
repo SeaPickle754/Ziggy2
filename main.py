@@ -10,22 +10,21 @@ from dialog import DialogBox
 from dialogLoader import load_dialog
 
 tilePaths={
-	"grass":"tiles\\grass.png",
-	"tree":"tiles\\tree.png",
-	"sand":"tiles\\sand.png",
-	"stone":"tiles\\stone.png",
-	"wall":"tiles\\stonewall.png",
-	"vineTree":"tiles\\vtree.png",
-	"water":"tiles\\water.png",
-	"background":"misc\\play.mp3",
-	"store":"tiles\\store.png",
-	"stairs":"tiles\\stairs.png",
-	"start":"misc\\start.png",
-	"mud":"tiles\\dirt.png",
-	"sign":"tiles\\sign.png",
+	"grass":"tiles/grass.png",
+	"tree":"tiles/tree.png",
+	"sand":"tiles/sand.png",
+	"stone":"tiles/stone.png",
+	"wall":"tiles/stonewall.png",
+	"vineTree":"tiles/vtree.png",
+	"water":"tiles/water.png",
+	"background":"misc/play.mp3",
+	"store":"tiles/store.png",
+	"stairs":"tiles/stairs.png",
+	"start":"misc/start.png",
+	"mud":"tiles/dirt.png",
+	"sign":"tiles/sign.png",
 }
-
-MUD_SLOW = 100
+mud_slow = 0
 
 
 class Game(pyglet.window.Window):
@@ -44,7 +43,7 @@ class Game(pyglet.window.Window):
 			[0,0,0,0,0,0,0,0,0,1]
 		]
 		self.batch, self.group = pyglet.graphics.Batch(), pyglet.graphics.OrderedGroup(0)
-		self.start = pyglet.image.load(tilePaths["start"])
+		self.start= pyglet.image.load(tilePaths["start"])
 		self.tiles, self.enemies, self.pastFps = [],[], 0
 		self.dialogOpen, self.nextRoom, self.muted = False, 2, False
 		pygame.mixer.init()
@@ -53,13 +52,14 @@ class Game(pyglet.window.Window):
 		pygame.mixer.music.play(-1)
 		self.entityBatch = pyglet.graphics.Batch()
 		self.player = player.Player(0, 0, self.batch)
+		mud_slow = self.player.strength * 100
 		self.player.group = self.group
 		room_loader.batch = self.entityBatch
 		self.storeInteract = False
 		self.items = []
 		self.tiles = self.init_tiles(self.tileArray)
 		for i in range(0, 3):
-			self.items.append(objects.Item("misc\\coin.png", random.randint(0, 368), random.randint(0, 368), 1, batch = self.entityBatch))
+			self.items.append(objects.Item("misc/coin.png", random.randint(0, 368), random.randint(0, 368), 1, batch = self.entityBatch))
 			self.items[-1].group = self.group
 		self.dialog = DialogBox(load_dialog(1))
 		for i in range(0, 3):
@@ -227,7 +227,7 @@ class Game(pyglet.window.Window):
 				self.enemies.append(enemy.Zombie(self.player, self.entityBatch))
 		self.nextRoom = 2
 		for i in range(0, 3):
-			self.items.append(objects.Item("misc\\coin.png", random.randint(0, 368), random.randint(0, 368), 1, self.entityBatch))
+			self.items.append(objects.Item("misc/coin.png", random.randint(0, 368), random.randint(0, 368), 1, self.entityBatch))
 	def update(self, dt):
 		if not self.game_active:
 			return
@@ -300,7 +300,7 @@ class Game(pyglet.window.Window):
 						self.storeInteract = False
 						self.items = []
 						for i in range(0, 3):
-							self.items.append(objects.Item("misc\\coin.png", random.randint(0, 368), random.randint(0, 368), 1, batch = self.entityBatch))
+							self.items.append(objects.Item("misc/coin.png", random.randint(0, 368), random.randint(0, 368), 1, batch = self.entityBatch))
 						self.player.x, self.player.y = 40, 40
 						self.enemies = []
 						for i in range(0, 3):
