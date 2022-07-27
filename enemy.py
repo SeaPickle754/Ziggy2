@@ -15,7 +15,7 @@ images = {
 	"dzombieDown":"enemies/zombie1damage.png",
 	"dzombieRight":"enemies/zombie2damage.png",
 	"dzombieLeft":"enemies/zombie3damage.png",
-	"dzombieUp":"enemies/zombie4damage.png",
+	"dzombieUp":"enemies/Zombie4damage.png",
 	"slimeDamage":"enemies/slime2.png",
 }
 tracking_distance = 300
