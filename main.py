@@ -27,6 +27,7 @@ tilePaths={
 
 MUD_SLOW = 100
 
+
 class Game(pyglet.window.Window):
 	def __init__(self, height, width, caption):
 		super().__init__(height, width, caption = caption)
@@ -42,13 +43,10 @@ class Game(pyglet.window.Window):
 			[0,0,0,9,0,0,11,11,0,0],
 			[0,0,0,0,0,0,0,0,0,1]
 		]
-		self.batch = pyglet.graphics.Batch()
-		self.group = pyglet.graphics.OrderedGroup(0)
+		self.batch, self.group = pyglet.graphics.Batch(), pyglet.graphics.OrderedGroup(0)
 		self.start = pyglet.image.load(tilePaths["start"])
-		self.tiles, self.enemies = [],[]
-		self.nextRoom = 2
-		self.dialogOpen = False
-		self.muted = False
+		self.tiles, self.enemies, self.pastFps = [],[], 0
+		self.dialogOpen, self.nextRoom, self.muted = False, 2, False
 		pygame.mixer.init()
 		pyglet.gl.glClearColor(0.2431, 0.2117, 0.2235, 1)
 		pygame.mixer.music.load(tilePaths["background"])
@@ -137,11 +135,11 @@ class Game(pyglet.window.Window):
 		self.label.text = f"Health: {self.player.health}"
 		self.label.y = 410
 		self.label.draw()
-		self.label.text = f"FPS {round(pyglet.clock.get_fps())}"
+		self.label.text = f"FPS {int(pyglet.clock.get_fps())}"
 		self.label.y = 430
 		self.label.x = 100
 		self.label.draw()
-	def on_key_press(self, symbol, modifiers):
+	def on_key_press(self,symbol, modifiers):
 		if self.game_active:
 			if symbol == pyglet.window.key.UP:
 				self.player.change_direction("up")
@@ -180,14 +178,13 @@ class Game(pyglet.window.Window):
 		
 
 	def on_draw(self):
-		self.clear()	
-		self.batch.draw()
-		self.player.draw()
-		self.entityBatch.draw()
-		for o in self.items:
-			o.draw()
-		if self.dialogOpen:
-			self.dialog.draw()
+		if self.game_active:
+			self.clear()
+			self.batch.draw()
+			self.player.draw()
+			self.entityBatch.draw()
+			if self.dialogOpen:
+				self.dialog.draw()
 		self.draw_text()
 		if not self.game_active:
 			self.start.blit(0, 0)

@@ -4,5 +4,5 @@ def load_dialog(dialogID):
 	if dialogID == 0:
 		return "Hello, welcome to my store.\nUnfortunately, I am out of stock.\nPlease Come back later.\nPress R or E to Close"
 	if dialogID == 2:
-		return "Hello!\nSEAPICKLE is better! Amogus is sus and \nbloodmoon is bloody."
+		return "Hello! Ziggy 2 is GOOD :)"
 	
