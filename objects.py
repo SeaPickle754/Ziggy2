@@ -1,5 +1,6 @@
 import pyglet
 import dialogLoader
+import dialog
 import random
 
 class Tile(pyglet.sprite.Sprite):
@@ -42,8 +43,8 @@ class RoomChange(Tile):
 
 class Item(pyglet.sprite.Sprite):
 	#=========================
-	# Rigid basis of the world. Are placed
-	# An item. Can be place anywhere.
+	# Rigid basis of the world. Are placed as
+	# An item. Can be placed anywhere.
 	# Params: texture: file path
 	# x: x, y: y,
 	# ID: number for the type of item
@@ -72,11 +73,12 @@ class Store(Tile):
 	def doTransaction(self, player):
 		if self.storeType == 1:
 			if player.coins <= 0:
-				return
+				return dialog.DialogBox(dialogLoader.load_dialog(3))
 			player.coins -= 1
 			player.health = 5
-		if self.storeType == 2:
-			return
+			return 0
+		if self.storeType == 0:
+			return 0
 
 
 class Sign(Tile):
