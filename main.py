@@ -269,7 +269,7 @@ class Game(pyglet.window.Window):
 						self.player.taking_damage = 20
 						if self.player.health <= 0:
 							print("game over!!")
-							self.storeInteract = x
+							self.storeInteract = self.messageHandler
 							self.dialogOpen = True
 							self.dialog = DialogBox(dialogLoader.load_dialog(-1))
 							
@@ -303,7 +303,7 @@ class Game(pyglet.window.Window):
 								elif self.collide(self.player, x) and x.type == 3:
 									self.dialog = DialogBox(x.get_dialog())
 									self.dialogOpen = True
-									self.storeInteract = self.messageHandler
+									self.storeInteract = x
 									self.player.x = preX
 									self.player.y = preY
 									continue
