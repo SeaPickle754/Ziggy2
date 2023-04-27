@@ -5,6 +5,7 @@ import pygame.mixer as pm
 from math import sqrt
 import objects
 import player
+import dialogLoader
 import room_loader
 import enemy
 from dialog import DialogBox
@@ -37,7 +38,7 @@ class Game(pyglet.window.Window):
 		self.batch, self.group = pyglet.graphics.Batch(), pyglet.graphics.OrderedGroup(0)
 		self.start = pyglet.image.load(tilePaths["start"])
 		self.tiles, self.enemies, self.pastFps = [],[], 0
-		
+		self.messageHandler = objects.MessageHandler()
 		self.dialogOpen, self.nextRoom, self.muted = False, 2, True
 		pm.init()
 		pyglet.gl.glClearColor(0.2431, 0.2117, 0.2235, 1)
@@ -124,6 +125,8 @@ class Game(pyglet.window.Window):
 				elif j == 12:
 					self.tiles[y].append(objects.Sign(tilePaths["sign"], x, y, self.batch, self.nextRoom))
 					self.tiles[y][-1].group = self.group
+
+		#self.tiles[9].append(objects.MessageHandler())
 		del self.tileArray
 		return self.tiles
 				
@@ -215,7 +218,6 @@ class Game(pyglet.window.Window):
 		self.enemies = list()
 		self.player = player.Player(0, 0, self.batch)
 		self.init_tiles()
-		self.storeInteract = False
 		self.objects = set()
 		for i in range(0, 3):
 			if random.randint(0, 1):
@@ -267,6 +269,10 @@ class Game(pyglet.window.Window):
 						self.player.taking_damage = 20
 						if self.player.health <= 0:
 							print("game over!!")
+							self.storeInteract = x
+							self.dialogOpen = True
+							self.dialog = DialogBox(dialogLoader.load_dialog(-1))
+							
 							self.restart()
 		for i in self.items:
 			if self.distance(i, self.player) < 100:
@@ -297,7 +303,7 @@ class Game(pyglet.window.Window):
 								elif self.collide(self.player, x) and x.type == 3:
 									self.dialog = DialogBox(x.get_dialog())
 									self.dialogOpen = True
-									self.storeInteract = x
+									self.storeInteract = self.messageHandler
 									self.player.x = preX
 									self.player.y = preY
 									continue

@@ -95,3 +95,9 @@ class Sign(Tile):
 	
 	def doTransaction(self, player):
 		return
+
+class MessageHandler:
+	def __init__(self):
+		self.type = -1
+	def doTransaction(self, player):
+		return
